@@ -34,11 +34,14 @@ public class FoodList extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://fir-app-36b01-default-rtdb.asia-southeast1.firebasedatabase.app");
         foodlist = database.getReference("Foods");
 
+
         recycler_menu = (RecyclerView) findViewById(R.id.recycler_food);
         recycler_menu.setHasFixedSize(true);
 
+
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
+
 
         if(getIntent() != null) {
             CategoryId = getIntent().getStringExtra("CategoryId");

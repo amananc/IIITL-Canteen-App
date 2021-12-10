@@ -4,12 +4,14 @@
     tools:showIn="navigation_view" >
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_menu"
             android:height="20sp"
             android:color="@android:color/white"
             android:icon="@drawable/spoon"
             android:title="Menu" />
+
         <item
             android:id="@+id/nav_cart"
             android:height="20sp"
@@ -24,13 +26,19 @@
             android:icon="?attr/actionModePasteDrawable"
             android:title="Orders" />
 
-
         <item
             android:id="@+id/nav_signout"
             android:height="20sp"
             android:color="@android:color/white"
             android:icon="@drawable/logout"
             android:title="Sign Out" />
+
+        <item
+            android:id="@+id/about_us_button"
+            android:height="20sp"
+            android:color="@android:color/white"
+            android:icon="@drawable/i_button"
+            android:title="About Us" />
 
     </group>
 </menu>

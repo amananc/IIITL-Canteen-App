@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent SignUp_Intent = new Intent(MainActivity.this, com.anchal.canteentest.SignUp.class);
+                Intent SignUp_Intent = new Intent(MainActivity.this, com.anchal.canteentest.OTPAuth.class);
                 startActivity(SignUp_Intent);
             }
         });

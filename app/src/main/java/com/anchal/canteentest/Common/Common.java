@@ -15,9 +15,23 @@ public class Common
     public static String convertCodeToStatus(String status) {
         if(status.equals("0"))
             return "Order Placed";
+
         else if(status.equals("1"))
             return "Order on the Way!";
+
         else
             return "Order Delivered";
+    }
+
+    public static int returnStatusCode(String status)
+    {
+        if(status.equals("0"))
+            return 0;
+
+        else if(status.equals("1"))
+            return 1;
+
+        else
+            return 2;
     }
 }

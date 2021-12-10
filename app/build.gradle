@@ -60,4 +60,5 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
 }

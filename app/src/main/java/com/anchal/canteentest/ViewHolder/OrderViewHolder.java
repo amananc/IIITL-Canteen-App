@@ -11,7 +11,7 @@ import com.anchal.canteentest.R;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress, txtOrderDistance;
+    public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress, txtPrice;
     private ItemClickListener itemClickListener;
     public OrderViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,7 +20,7 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
         txtOrderId =(TextView) itemView.findViewById(R.id.order_id);
         txtOrderPhone =(TextView) itemView.findViewById(R.id.order_phone);
         txtOrderStatus =(TextView) itemView.findViewById(R.id.order_status);
-        txtOrderDistance = (TextView)itemView.findViewById(R.id.order_dist);
+        txtPrice = (TextView)itemView.findViewById(R.id.order_price);
         itemView.setOnClickListener(this);
     }
 
@@ -32,4 +32,5 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void onClick(View v) {
         itemClickListener.onClick(v, getAdapterPosition(), false);
     }
+
 }

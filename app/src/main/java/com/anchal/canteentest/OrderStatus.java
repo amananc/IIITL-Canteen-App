@@ -1,14 +1,17 @@
 package com.anchal.canteentest;
 
 import static com.anchal.canteentest.Common.Common.convertCodeToStatus;
+import static com.anchal.canteentest.Common.Common.returnStatusCode;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anchal.canteentest.Common.Common;
+import com.anchal.canteentest.Interface.ItemClickListener;
 import com.anchal.canteentest.Model.Request;
 import com.anchal.canteentest.ViewHolder.OrderViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -55,13 +58,29 @@ public class OrderStatus extends AppCompatActivity {
                 R.layout.order_layout,
                 OrderViewHolder.class,
                 requests.orderByChild("phone").equalTo(phone)
-        ) {
+        )
+        {
             @Override
             protected void populateViewHolder(OrderViewHolder orderViewHolder, Request request, int i) {
+
                 orderViewHolder.txtOrderId.setText(adapter.getRef(i).getKey());
                 orderViewHolder.txtOrderStatus.setText(convertCodeToStatus(request.getStatus()));
+
+
+                // Setting the text color of order status
+                if(returnStatusCode(request.getStatus()) == 0)
+                    orderViewHolder.txtOrderStatus.setTextColor(getResources().getColor(R.color.white));
+
+                else if(returnStatusCode(request.getStatus()) == 1)
+                    orderViewHolder.txtOrderStatus.setTextColor(getResources().getColor(R.color.blue_grotto));
+
+                else
+                    orderViewHolder.txtOrderStatus.setTextColor(getResources().getColor(R.color.green));
+
+
                 orderViewHolder.txtOrderAddress.setText(request.getAddress());
                 orderViewHolder.txtOrderPhone.setText(request.getPhone());
+
                 double d = Double.parseDouble(request.getDistance());
                 double price = 0;
 
@@ -73,7 +92,27 @@ public class OrderStatus extends AppCompatActivity {
 
                 Locale locale = new Locale("en", "IN");
                 NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-                orderViewHolder.txtOrderDistance.setText(request.getTotal() + " + " + fmt.format(price));
+
+                if(price > 0) {
+                    orderViewHolder.txtPrice.setText(request.getTotal() + " + " + fmt.format(price));
+                }
+                else
+                {
+                    orderViewHolder.txtPrice.setText(request.getTotal());
+                }
+
+
+
+                orderViewHolder.setItemClickListener(new ItemClickListener()
+                {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick)
+                    {
+                        //Toast.makeText(OrderStatus.this, "", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
             }
         };
         recyclerView.setAdapter(adapter);

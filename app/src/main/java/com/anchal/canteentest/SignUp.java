@@ -33,7 +33,6 @@ public class SignUp extends AppCompatActivity
     final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
 
     /*
-
         ^                 # start-of-string
         (?=.*[0-9])       # a digit must occur at least once
         (?=.*[a-z])       # a lower case letter must occur at least once
@@ -58,6 +57,13 @@ public class SignUp extends AppCompatActivity
         password_editText = (EditText)findViewById(R.id.password_ediText);
 
         signUp_button = (Button)findViewById(R.id.signUp_button);
+
+
+
+
+        phone_editText.setText(OTPAuth.getPhoneNo().toString());
+        phone_editText.setEnabled(false);
+
 
 
         // Getting reference of database .

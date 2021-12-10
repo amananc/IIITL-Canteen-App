@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:hint=" Address"
+                android:hint="Enter Address"
                 android:inputType="text"
                 android:text=""
                 android:textColorHint="@color/colorPrimary"
@@ -44,18 +44,21 @@
                 android:layout_margin="2dp">
 
                 <RadioButton
-                    android:id = "@+id/rdiShipToAddress"
-                    android:text="Ship To This Address"
+                    android:id = "@+id/rdiCurrentAddress"
+                    android:text="Current Address"
+                    android:buttonTint="@color/teal_700"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </RadioButton>
 
                 <RadioButton
                     android:id = "@+id/rdiHomeAddress"
-                    android:text = "Home Address"
+                    android:text = "Default Address"
+                    android:buttonTint="@color/teal_700"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </RadioButton>
+
             </RadioGroup>
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -77,14 +80,16 @@
                 <RadioButton
                     android:id = "@+id/rdiCashOnDelivery"
                     android:text="Cash On Delivery"
-                    android:checked="true"
+                    android:buttonTint="@color/teal_700"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </RadioButton>
 
                 <RadioButton
                     android:id = "@+id/rdiPayNow"
-                    android:text = "Pay Now"
+                    android:text = "Pay Online"
+                    android:checked="true"
+                    android:buttonTint="@color/teal_700"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </RadioButton>

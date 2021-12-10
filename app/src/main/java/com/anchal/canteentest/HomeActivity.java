@@ -58,14 +58,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         category = database.getReference("Category");
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 Intent cartIntent = new Intent(HomeActivity.this, Cart.class);
                 startActivity(cartIntent);
             }
+
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.Open, R.string.Close);
@@ -126,8 +130,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if(drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
         else
@@ -152,18 +158,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        if(id == R.id.nav_cart) {
+
+        if(id == R.id.nav_cart)
+        {
             Intent cartIntent = new Intent(HomeActivity.this, Cart.class);
             startActivity(cartIntent);
         }
-        else if (id == R.id.nav_menu) {
 
+        else if (id == R.id.nav_menu)
+        {
+            // We are already on the menu.
         }
-        else if (id == R.id.nav_orders) {
+
+        else if (id == R.id.nav_orders)
+        {
             Intent orderIntent = new Intent(HomeActivity.this, OrderStatus.class);
             startActivity(orderIntent);
         }
-        else {
+
+        else if(id == R.id.about_us_button)
+        {
+            Intent aboutUsIntent = new Intent(HomeActivity.this, About_us.class);
+            startActivity(aboutUsIntent);
+        }
+
+        else
+            {
             Intent signIn = new Intent(HomeActivity.this, SignIn.class);
             signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(signIn);

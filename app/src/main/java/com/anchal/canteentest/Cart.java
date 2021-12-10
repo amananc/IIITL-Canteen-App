@@ -137,11 +137,12 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
 
     // Clearing the cart.
     private void clearCart() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this, R.style.AlertDialogTheme);
         alertDialog.setTitle("Clear Cart");
         alertDialog.setMessage("Are you sure you want to clear cart?");
 
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -160,6 +161,9 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
 
         alertDialog.show();
 
+//        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
+//        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.GREEN);
+
     }
 
     private void createLocationRequest()
@@ -177,6 +181,7 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 9999) {
             System.out.println(grantResults[0]);
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 System.out.println("2");
                 if (checkPlayServices()) {
@@ -212,7 +217,7 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
     }
 
     private void showAlertDialog() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Cart.this, R.style.AlertDialogTheme);
         alertDialog.setTitle("One More Step!");
         alertDialog.setMessage("Enter your Address: ");
 
@@ -224,19 +229,21 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
 
 
         // This is our default longitude and latitude.
-        // i.e. this is IIIT Lucknow Canteen's location.
+        // i.e. this is IIIT Lucknow Canteen's location which is currently inside the admin building.
 
         final double localLat = 26.801425;
         final double localLng = 81.024457;
 
-        RadioButton rdiShipToAddress = order_address.findViewById(R.id.rdiShipToAddress);
+        final boolean[] isAddressManual = {true};
+
+        RadioButton rdiCurrentAddress = order_address.findViewById(R.id.rdiCurrentAddress);
         RadioButton rdiHomeAddress = order_address.findViewById(R.id.rdiHomeAddress);
         RadioButton rdiCashOnDelivery = order_address.findViewById(R.id.rdiCashOnDelivery);
         RadioButton rdiPayNow = order_address.findViewById(R.id.rdiPayNow);
 
         final Geocoder geocoder;
         geocoder = new Geocoder(this, Locale.getDefault());
-        rdiShipToAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        rdiCurrentAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
@@ -249,6 +256,8 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                    isAddressManual[0] = false;
                 }
             }
         });
@@ -259,6 +268,8 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 edtAddress.setText("IIIT Lucknow Hostel - 01");
                 distancek = 0.01;
+
+                isAddressManual[0] = false;
             }
         });
 
@@ -271,9 +282,41 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
             }
         });
 
-        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener()
+        {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
+
+                if(isAddressManual[0])
+                {
+                    String myLocation = edtAddress.getText().toString();
+                    Geocoder geocoder = new Geocoder(Cart.this, Locale.getDefault());
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocationName(myLocation, 1);
+                    } catch (IOException e) {
+                        Toast.makeText(Cart.this, "Can't find this address. Please try different address.", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                    Address address = addresses.get(0);
+
+                    if(addresses.size() > 0) {
+                        double latitude = addresses.get(0).getLatitude();
+                        double longitude = addresses.get(0).getLongitude();
+
+                        distancek = distance(localLat, localLng, latitude, longitude, "K");
+                    }
+                }
+
+                if(distancek > 2.0)
+                {
+                    Toast.makeText(Cart.this, "Please enter address which is closer to the canteen.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 Request request = new Request(
                         Common.currentUser.getPhoneNo(),
                         Common.currentUser.getName(),
@@ -300,7 +343,7 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
         alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Toast.makeText(Cart.this, "Order is not placed.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -376,9 +419,15 @@ public class Cart extends AppCompatActivity implements GoogleApiClient.Connectio
         else {
             double theta = lon1 - lon2;
             double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+
             dist = Math.acos(dist);
             dist = Math.toDegrees(dist);
             dist = dist * 60 * 1.1515;
+
+            // K represents Kilometers.
+            // M represents Miles.
+            // N represents Nautical Miles.
+
             if (unit.equals("K")) {
                 dist = dist * 1.609344;
             } else if (unit.equals("N")) {

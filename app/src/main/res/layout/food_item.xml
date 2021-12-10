@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="100sp"
     android:layout_marginBottom="8dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/food_image"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/dark"/>
 
         <TextView
             android:id="@+id/food_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="100sp"
             android:fontFamily="sans-serif"
             android:gravity="center"
             android:text="Name of Food"
@@ -28,5 +31,6 @@
             android:background="#861B1818"
             android:backgroundTint="@android:color/black"
             android:textSize="18sp"/>
-    </RelativeLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

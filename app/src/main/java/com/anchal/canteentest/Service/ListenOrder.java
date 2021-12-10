@@ -62,7 +62,9 @@ public class ListenOrder extends Service implements ChildEventListener {
 
             //Trigger
             Request request = dataSnapshot.getValue(Request.class);
-            showNotification(dataSnapshot.getKey(),request);
+
+            // Will use this feature later...........
+            //showNotification(dataSnapshot.getKey(),request);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -95,7 +97,7 @@ public class ListenOrder extends Service implements ChildEventListener {
             r = "You have recieved a discount of 10% for being a regular customer";
         }
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
-        notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL).setWhen(System.currentTimeMillis()).setSmallIcon(R.mipmap.ic_launcher).setPriority(Notification.PRIORITY_MAX).setContentTitle("Bitesize").setContentText(r).setContentInfo("Info").setContentIntent(contentIntent);
+        notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL).setWhen(System.currentTimeMillis()).setSmallIcon(R.mipmap.ic_launcher).setPriority(Notification.PRIORITY_MAX).setContentTitle("IIITL Canteen").setContentText(r).setContentInfo("Info").setContentIntent(contentIntent);
 
 
         int mNotificationId = (int) System.currentTimeMillis();

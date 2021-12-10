@@ -41,6 +41,7 @@ public class FoodDetails extends AppCompatActivity {
     RadioGroup radioFoodSize;
     RadioButton radioFoodButton;
     String price = "Select item size";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,6 @@ public class FoodDetails extends AppCompatActivity {
         btnCart = findViewById(R.id.btnCart);
         btnGotoCart = findViewById(R.id.btnGotoCart);
 
-
         radioFoodSize = findViewById(R.id.food_size);
 
         // Checking what the user has selected.
@@ -63,12 +63,16 @@ public class FoodDetails extends AppCompatActivity {
         // For medium the price will be 1.5 times the price of small
         // And for large the price will be 2 times the price of small.
 
+
+
         radioFoodSize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
                 radioFoodButton = findViewById(checkedId);
 
-                if(radioFoodButton.isChecked()) {
+                if(radioFoodButton.isChecked())
+                {
                     if (radioFoodButton.getText().equals("Small"))
                         price = currentFood.getPrice();
                     else if (radioFoodButton.getText().equals("Medium"))
@@ -76,12 +80,15 @@ public class FoodDetails extends AppCompatActivity {
                     else if (radioFoodButton.getText().equals("Large"))
                         price = String.valueOf(Double.parseDouble(currentFood.getPrice()) * 2);
                 }
+
                 else
                 {
                     Toast.makeText(FoodDetails.this, "Please select the size of the food.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
 
         // This intent will open cart.
         btnGotoCart.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +103,10 @@ public class FoodDetails extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                if(price.equals("Select item size"))
+                {
+                    price = String.valueOf(Double.parseDouble(currentFood.getPrice()));
+                }
                 new Database(getBaseContext()).addToCart(new Order(
                         foodId,
                         currentFood.getName(),
@@ -103,6 +114,7 @@ public class FoodDetails extends AppCompatActivity {
                         price,
                         currentFood.getDiscount()
                 ));
+
                 Toast.makeText(FoodDetails.this, "Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
@@ -132,6 +144,7 @@ public class FoodDetails extends AppCompatActivity {
                 currentFood = dataSnapshot.getValue(Food.class);
                 Picasso.with(getBaseContext()).load(currentFood.getImage()).into(food_image);
                 collapsingToolbarLayout.setTitle(currentFood.getName());
+
                 if(price.charAt(0)== 'S')
                     food_price.setText(price);
                 else
